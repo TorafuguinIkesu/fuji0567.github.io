@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPublishedPosts } from '../../lib/posts';
+
+const posts = await getPublishedPosts();
+const tags = [...new Set(posts.flatMap((post) => post.data.tags))].sort((a, b) => a.localeCompare(b, 'ja'));
+---
+
+<BaseLayout title="Tags" description="FUJI 0567 のタグ一覧。">
+  <div class="container">
+    <section class="page-intro">
+      <p class="eyebrow">Index</p>
+      <h1>Tags</h1>
+    </section>
+    {tags.length > 0 ? (
+      <div class="tag-grid" aria-label="タグ一覧">
+        {tags.map((tag) => <a class="tag" href={`/tags/${encodeURIComponent(tag)}/`}>{tag}</a>)}
+      </div>
+    ) : (
+      <p class="empty-state section">記事にタグを追加すると、ここに表示されます。</p>
+    )}
+  </div>
+</BaseLayout>

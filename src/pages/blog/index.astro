@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostList from '../../components/PostList.astro';
+import { getPublishedPosts } from '../../lib/posts';
+
+const posts = await getPublishedPosts();
+---
+
+<BaseLayout title="Blog" description="FUJI 0567 の記事一覧。">
+  <div class="container">
+    <section class="page-intro">
+      <p class="eyebrow">Archive</p>
+      <h1>Blog</h1>
+    </section>
+    <section class="section" aria-label="記事一覧">
+      <PostList posts={posts} />
+    </section>
+  </div>
+</BaseLayout>

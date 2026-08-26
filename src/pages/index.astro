@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostList from '../components/PostList.astro';
+import { getPublishedPosts } from '../lib/posts';
+
+const posts = await getPublishedPosts();
+---
+
+<BaseLayout>
+  <div class="container">
+    <section class="page-intro">
+      <p class="eyebrow">Personal blog</p>
+      <h1>言葉と記録のための、静かな場所。</h1>
+    </section>
+    <section class="section" aria-labelledby="latest-heading">
+      <div class="section-heading">
+        <h2 id="latest-heading">Latest</h2>
+        <a href="/blog/">すべての記事を見る</a>
+      </div>
+      <PostList posts={posts.slice(0, 5)} />
+    </section>
+  </div>
+</BaseLayout>
