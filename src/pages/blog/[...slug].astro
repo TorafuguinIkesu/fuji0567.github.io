@@ -3,6 +3,7 @@ import { getCollection, render, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import TagList from '../../components/TagList.astro';
 import { formatDate } from '../../lib/posts';
+import { editPostUrl } from '../../lib/repository';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -31,6 +32,7 @@ const { Content } = await render(post);
         {post.data.updatedDate && <> — 更新 {formatDate(post.data.updatedDate)}</>}
       </p>
       <TagList tags={post.data.tags} />
+      <p><a class="text-link" href={editPostUrl(post.id)} target="_blank" rel="noopener">この記事を編集する →</a></p>
     </header>
     <div class="prose">
       <Content />

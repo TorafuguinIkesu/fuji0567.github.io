@@ -1,4 +1,6 @@
 ---
+import { repositoryBranch, repositoryUrl } from '../lib/repository';
+
 interface Props {
   title?: string;
   description?: string;
@@ -17,6 +19,7 @@ const {
 const pageTitle = title === 'FUJI 0567' ? title : `${title} | FUJI 0567`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const imageURL = new URL(image, Astro.site);
+const newPostUrl = `${repositoryUrl}/new/${repositoryBranch}`;
 ---
 
 <!doctype html>
@@ -59,6 +62,7 @@ const imageURL = new URL(image, Astro.site);
           <a href="/blog/">Blog</a>
           <a href="/tags/">Tags</a>
           <a href="/about/">About</a>
+          <a class="write-link" href={newPostUrl} data-new-post data-new-post-url={newPostUrl} target="_blank" rel="noopener">書く</a>
         </nav>
         <button class="theme-toggle" type="button" aria-label="表示テーマを切り替える" title="表示テーマを切り替える">
           <span aria-hidden="true">◐</span>
@@ -81,6 +85,20 @@ const imageURL = new URL(image, Astro.site);
         document.documentElement.dataset.theme = nextTheme;
         localStorage.setItem('theme', nextTheme);
       });
+
+      const writePost = document.querySelector('[data-new-post]');
+      if (writePost instanceof HTMLAnchorElement) {
+        const now = new Date();
+        const pad = (number: number) => String(number).padStart(2, '0');
+        const date = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+        const time = `${pad(now.getHours())}${pad(now.getMinutes())}`;
+        const template = `---\ntitle: "記事タイトル"\ndescription: "記事の短い説明"\npubDate: ${date}\ntags: ["日記"]\ndraft: false\n---\n\nここから本文です。\n`;
+        const query = new URLSearchParams({
+          filename: `src/content/blog/post-${date}-${time}.md`,
+          value: template,
+        });
+        writePost.href = `${writePost.dataset.newPostUrl}?${query}`;
+      }
     </script>
   </body>
 </html>
@@ -128,6 +146,8 @@ const imageURL = new URL(image, Astro.site);
   nav { display: flex; gap: 1.15rem; font-size: 0.9rem; }
   nav a { text-decoration: none; }
   nav a:hover { text-decoration: underline; }
+  nav .write-link { padding-inline: 0.45rem; border: 1px solid var(--line); border-radius: 999px; }
+  nav .write-link:hover { background: var(--soft); text-decoration: none; }
   .theme-toggle {
     display: grid; width: 2.25rem; height: 2.25rem; place-items: center;
     padding: 0; border: 1px solid var(--line); border-radius: 999px;
@@ -180,5 +200,11 @@ const imageURL = new URL(image, Astro.site);
     .section { margin-top: 3.5rem; }
     .site-footer { margin-top: 5rem; }
     .post-link { grid-template-columns: 1fr; gap: 0.45rem; }
+  }
+  @media (max-width: 360px) {
+    .header-inner { gap: 0.4rem; }
+    .site-name { font-size: 0.72rem; letter-spacing: 0.08em; }
+    nav { gap: 0.42rem; font-size: 0.74rem; }
+    nav .write-link { padding-inline: 0.32rem; }
   }
 </style>
