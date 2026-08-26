@@ -26,9 +26,12 @@ draft: false
 
 ## ブラウザだけで書く
 
-公開サイト右上の **「書く」** を押すと、GitHubの新規記事画面が開きます。
-下書き済みの雛形に本文を書いて、GitHub上で **Commit changes** を押すだけで
-公開されます。記事ページには **「この記事を編集する」** も表示されます。
+公開サイト右上の **「投稿を作成」** を押すと、GitHubの新規記事画面が開きます。
+下書き済みの雛形に本文を書いたら、**Commit changes** で
+**Create a new branch for this commit and start a pull request** を選びます。
+管理者がPull Requestを確認・マージしたあとに公開されます。記事ページには
+**「この記事を編集する」** も表示されます。詳しい手順は
+[`CONTRIBUTING.md`](CONTRIBUTING.md) を見てください。
 
 ## ローカルで確認
 

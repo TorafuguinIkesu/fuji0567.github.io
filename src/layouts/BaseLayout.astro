@@ -62,7 +62,9 @@ const newPostUrl = `${repositoryUrl}/new/${repositoryBranch}`;
           <a href="/blog/">Blog</a>
           <a href="/tags/">Tags</a>
           <a href="/about/">About</a>
-          <a class="write-link" href={newPostUrl} data-new-post data-new-post-url={newPostUrl} target="_blank" rel="noopener">書く</a>
+          <a class="write-link" href={newPostUrl} data-new-post data-new-post-url={newPostUrl} target="_blank" rel="noopener" aria-label="新しい投稿を作成する">
+            投稿<span class="write-link-label">を作成</span>
+          </a>
         </nav>
         <button class="theme-toggle" type="button" aria-label="表示テーマを切り替える" title="表示テーマを切り替える">
           <span aria-hidden="true">◐</span>
@@ -200,6 +202,7 @@ const newPostUrl = `${repositoryUrl}/new/${repositoryBranch}`;
     .section { margin-top: 3.5rem; }
     .site-footer { margin-top: 5rem; }
     .post-link { grid-template-columns: 1fr; gap: 0.45rem; }
+    .write-link-label { display: none; }
   }
   @media (max-width: 360px) {
     .header-inner { gap: 0.4rem; }
